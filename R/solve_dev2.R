@@ -1,15 +1,19 @@
-#' @title EqSolv
-#' @description Find the equilibrium concentrations
-#' @param Tc Temperature (degrees C)
-#' @param Nat Sodium
-#' @param Kt Potassium
-#' @param Clt Chlorine
-#' @param SO4t Sulphate
-#' @param start Initial guess
+#' @title Mass balance and charge solver for general cases
+#' @description Mass balance and charge balance solver for chemical equilibria
+#' @param species Chemical symbols of the basis species
+#' @param conc Total concentrations of the basis species (mol/kg)
+#' @param a Ion size parameters for the basis species
+#' @param prod Dataframe detailing the derived species
+#' @param Tc Temperature (degrees centigrade)
+#' @param start Initial guess for the calculated equalibrium concentration of the basis species
 #' @param maxitr Maximum number of iterations
+#' @param solvent Symbols for solvent species (should not be changed)
+#' @param solvcharge Charges for solvent species (should not be changed)
+#' @param solva Ion size parameters (should not be changed)
+#' @param Ksoln log K of the solvent (should not be changed)
 #' @return A list containing the concentrations, gamma values, and pH at equilibrium
 #' @export
-htes2 <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c("9","4"),Ksoln=-10.908,species=c("Na","K","Cl","SO4","Ca","Mg"), conc=c(0.2,0.2,0.4,0.2,0.1,0.1),a=c(4,3,3.5,4,6,8),charges=c(1,1,-1,-2,2,2),prod,Tc=300,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100){
+chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c("9","4"),Ksoln=-10.908,species=c("Na","K","Cl","SO4","Ca","Mg"), conc=c(0.2,0.2,0.4,0.2,0.1,0.1),a=c(4,3,3.5,4,6,8),charges=c(1,1,-1,-2,2,2),prod,Tc=300,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100){
 		
 	Tk <- Tc+273.15
 

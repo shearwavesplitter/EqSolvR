@@ -2,11 +2,22 @@
 % Please edit documentation in R/products.R
 \name{prods}
 \alias{prods}
-\title{export}
+\title{Create prod dataframe}
 \usage{
 prods(names = c("NaCl", "KCl"), number = c(2, 2), species = c("Na", "Cl",
   "K", "Cl"), K = c(-6.68, 0.001), a = c(0, 0))
 }
+\arguments{
+\item{names}{A vector of names of the species which react to form the basis species}
+
+\item{number}{A vector of the number of basis consituents for each of the product species given by the equilibrium equation}
+
+\item{species}{A vector of the chemical symbols of the product species in terms of the basis species}
+
+\item{K}{A vector of log K values for the product species}
+
+\item{a}{A vector of ion size parameters for the product species}
+}
 \description{
-export
+Creates the dataframe of the derived species for use in chemsolve
 }
