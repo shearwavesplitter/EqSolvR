@@ -1,11 +1,13 @@
 Package: EqSolvR
+Version: 1.1.0
 Title: Chemical Equilibrium Solver
-Version: 0.0.1.1000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+Date: 2017-04-23
+Authors@R: c(person("Stefan", "Mroczek", email = "s.mroczek@outlook.com", role = c("aut", "cre")),person("Ed", "Mroczek", role = "aut"))
 Description: Package for solving chemical equilibria for a given set of reactants and products
-Depends: R (>= 2.12), rootSolve
+Depends: R (>= 2.12)
+Imports: rootSolve
 BugReports: https://github.com/shearwavesplitter/EqSolvR
-License: GPL (>= 2)
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1.9000
