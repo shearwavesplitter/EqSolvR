@@ -1,6 +1,6 @@
 Package: EqSolvR
-Version: 1.1.0
 Title: Chemical Equilibrium Solver
+Version: 1.1.0
 Date: 2017-04-23
 Authors@R: c(person("Stefan", "Mroczek", email = "s.mroczek@outlook.com", role = c("aut", "cre")),person("Ed", "Mroczek", role = "aut"))
 Description: Package for solving chemical equilibria for a given set of reactants and products
