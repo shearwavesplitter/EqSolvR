@@ -12,6 +12,7 @@
 #' @param solva Ion size parameters (should not be changed)
 #' @param Ksoln log K of the solvent (should not be changed)
 #' @return A list containing the concentrations, gamma values, and pH at equilibrium
+#' @details 
 #' @export
 chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c("9","4"),Ksoln=-10.908,species=c("Na","K","Cl","SO4","Ca","Mg"), conc=c(0.2,0.2,0.4,0.2,0.1,0.1),a=c(4,3,3.5,4,6,8),charges=c(1,1,-1,-2,2,2),prod,Tc=300,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100){
 		
