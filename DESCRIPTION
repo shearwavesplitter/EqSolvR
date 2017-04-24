@@ -3,10 +3,10 @@ Title: Chemical Equilibrium Solver
 Version: 1.1.0
 Date: 2017-04-23
 Authors@R: c(person("Stefan", "Mroczek", email = "s.mroczek@outlook.com", role = c("aut", "cre")),person("Ed", "Mroczek", role = "aut"))
-Description: Package for solving chemical equilibria for a given set of reactants and products
+Description: Package for solving chemical equilibria for a given set of reactants and products. The motivation for this program was to enable the calculation, between 300°C and 400°C, of pH and speciation given a simple mix of salts. This package has been writting in such a manner that an advanced user can easily set their own reactants, products and temperature.
 Depends: R (>= 2.12)
 Imports: rootSolve
-BugReports: https://github.com/shearwavesplitter/EqSolvR
+BugReports: https://github.com/shearwavesplitter/EqSolvR/issues
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

@@ -19,5 +19,5 @@ prods(names = c("NaCl", "KCl"), number = c(2, 2), species = c("Na", "Cl",
 \item{a}{A vector of ion size parameters for the product species}
 }
 \description{
-Creates the dataframe of the derived species for use in chemsolve
+Creates the dataframe of the derived species for use in chemsolve_generic
 }

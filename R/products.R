@@ -1,5 +1,5 @@
 #' @title Create prod dataframe
-#' @description Creates the dataframe of the derived species for use in chemsolve
+#' @description Creates the dataframe of the derived species for use in chemsolve_generic
 #' @param names A vector of names of the species which react to form the basis species
 #' @param number A vector of the number of basis consituents for each of the product species given by the equilibrium equation
 #' @param species A vector of the chemical symbols of the product species in terms of the basis species

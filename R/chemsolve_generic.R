@@ -12,8 +12,17 @@
 #' @param solva Ion size parameters (should not be changed)
 #' @param Ksoln log K of the solvent (should not be changed)
 #' @return A list containing the concentrations, gamma values, and pH at equilibrium
-#' @details 
+#' @details A generic function to add any basis species, product species or if the log K/temperature range need to be extended. Requires all parameters (e.g. log K at the given temperature). 
 #' @export
+#' @examples
+#' ## Add H2SO4 as an additional complex given the existing list of basis species
+#'
+#' ## Define the product species NaCl and KCl
+#' products <- prods(names=c("NaCl","KCl"),number=c(2,2),
+#' + species=c("Na","Cl","K","Cl"),K=c(-6.68,0.001),a=c(0,0))
+#' Run chemsolve with Na, K, and Cl basis species at 300 degrees
+#' Chemsolve_generic(species=c("Na","K","Cl"), conc=c(0.2,0.2,0.4),
+#' + a=c(4,3,3.5),charges=c(1,1,-1),prod,Tc=300,start=c(0.00001,0.00001,0.15),prod=products)
 chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c("9","4"),Ksoln=-10.908,species=c("Na","K","Cl","SO4","Ca","Mg"), conc=c(0.2,0.2,0.4,0.2,0.1,0.1),a=c(4,3,3.5,4,6,8),charges=c(1,1,-1,-2,2,2),prod,Tc=300,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100){
 		
 	Tk <- Tc+273.15

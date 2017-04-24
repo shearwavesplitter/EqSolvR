@@ -1,6 +1,6 @@
 #' @title Mass balance and charge solver
 #' @description Mass balance and charge balance solver for chemical equilibria. 
-#' @param Tc Temperature (degrees C)
+#' @param Tc Temperature (degrees C - between 300 and 400)
 #' @param Nat Sodium concentration (mol/kg); total 
 #' @param Kt Potassium (mol/kg); total
 #' @param Clt Chlorine (mol/kg); total
@@ -15,14 +15,21 @@
 #' @param excharges A vector of the charage of the complex species
 #' @param exK A vector of the log K of the dissociation constants
 #' @param exa A vector of the ion size paramters for the complexes
-#' @details A wrapper for the chemsolve_generic function that allow easy addition of product species. If you want to add additional reactant species (i.e. basis species) then the chemsolve_generic function must be used
+#' @details A wrapper for the chemsolve_generic function that allow easy addition of product species. If you want to add additional reactant species (i.e. basis species) then the chemsolve_generic function must be used.
+#' The basis species are:  Na+, K+, Mg2+, Ca2+, Cl-, SO42-. The default complexes are:  NaCl°, KCl°, HCl°, KOH°, NaOH°, KSO4-, NaSO4-,HSO4-,CaSO4°,MgSO4°, MgCl+,CaCl+,CaCl2°,MgOH+,CaOH+.Additional complexes based on the existing basis species are easily added. \cr
+#' Use the generic function (chemsolve_generic) if new basis species need to be added or if the log K/temperature range is extended (up or down). \cr
+#' Charge balance is fixed on H+. \cr
+#' Normally total initial moles anions = total moles cations  but excess anions will be balanced by more H+ and vice versa. It is important to choose good initial starting values; for H+, OH- and equilibrium concentrations of the basis species. \cr
+#' Complex dissociation constants (Log K)  are from SupCrt 92  slop98.dat \url{http://geopig.asu.edu/?q=tools} \cr
+#' The Debye_Hückel parameters (A, B & Bdot) equations are polynomial fits to data from tables in Helgeson (1969)  Helgeson & Kirkham (1974) by Nellie Olsen (Note Bdot not used at temperatures  greater than 300°C). \cr
+#' Helgeson H. C. (1969) Thermodynamics of hydrothermal systems at elevated temperatures and pressures. American Journal of Science 267, 729-804. \cr
+#' Helgeson H. C. and Kirkham D. H. (1974) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures: II. Debye-Hückel parameters for activity coefficients and relative partial molar properties American Journal of Science 274, 1199-1261.
 #' @return A list containing the concentrations, activity coefficients, and pH at equilibrium
 #' @export
 #' @examples
 #' ## Add H2SO4 as an additional complex given the existing list of basis species
 #'
 #' chemsolve(exprod="H2SO4",exconstit="H","H","SO4",exnumz=3,excharges=0,exa=0,exK=-6)
-#' 
 chemsolve <- function(Tc=300,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,exprod=NULL,exconstit=NULL,exnumz=NULL,excharges=NULL,exa=NULL,exK=NULL) {
 
 spec <- c("Na","K","Cl","SO4","Ca","Mg")
