@@ -3,3 +3,4 @@
 export(chemsolve)
 export(chemsolve_generic)
 export(prods)
+importFrom(rootSolve,multiroot)

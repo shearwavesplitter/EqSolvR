@@ -25,13 +25,13 @@
 #' Helgeson H. C. (1969) Thermodynamics of hydrothermal systems at elevated temperatures and pressures. American Journal of Science 267, 729-804. \cr
 #' Helgeson H. C. and Kirkham D. H. (1974) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures: II. Debye-Hückel parameters for activity coefficients and relative partial molar properties American Journal of Science 274, 1199-1261.
 #' @return A list containing the concentrations, activity coefficients, and pH at equilibrium
+#' @importFrom rootSolve multiroot
 #' @export
 #' @examples
 #' ## Add H2SO4 as an additional complex given the existing list of basis species
 #'
 #' chemsolve(exprod="H2SO4",exconstit="H","H","SO4",exnumz=3,excharges=0,exa=0,exK=-6)
 chemsolve <- function(Tc=300,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,exprod=NULL,exconstit=NULL,exnumz=NULL,excharges=NULL,exa=NULL,exK=NULL) {
-
 spec <- c("Na","K","Cl","SO4","Ca","Mg")
 concz <- c(Nat,Kt,Clt,SO4t,Cat,Mgt)
 speccharges <- c(1,1,-1,-2,2,2)
@@ -43,8 +43,57 @@ constit <- c("Na","SO4","H","SO4","K","SO4","Na","Cl","K","Cl","H","Cl","K","OH"
 numz <- c(rep(2,12),3,2,2)
 charges <- c(-1,-1,-1,0,0,0,0,0,0,0,1,1,0,1,1)
 as <- c(4,4,4,0,0,0,0,0,0,0,8,6,0,8,6)
-kt <- subset(ktable, T== Tc)
-ks <- sapply(1:length(products),function(k) kt[[which(colnames(kt) == products[k])]])
+
+
+## Determine K
+tab <- ktable
+temps <- tab[[1]]
+if(Tc %in% tab[[1]]){
+}else{
+	print("Interpolating constants")
+	if (Tc < min(tab[[1]])){print("Caution: Temperature out of bounds for interpolation")}
+	if (Tc > max(tab[[1]])){print("Caution: Temperature out of bounds for interpolation")}
+	
+		Kws <- lm(tab[[2]] ~ poly(temps,3))
+		K_2s <- lm(tab[[3]] ~ poly(temps,3))
+		K_3s <-  lm(tab[[4]] ~ poly(temps,3))
+		K_4s <-  lm(tab[[5]] ~ poly(temps,3))
+		K_5s <-  lm(tab[[6]] ~ poly(temps,3))
+		K_6s <-  lm(tab[[7]] ~ poly(temps,3))
+		K_7s <-  lm(tab[[8]] ~ poly(temps,3))
+		K_8s <-  lm(tab[[9]] ~ poly(temps,3))
+		K_9s <-  lm(tab[[10]] ~ poly(temps,3))
+		K_10s <- lm(tab[[11]] ~ poly(temps,3))
+		K_11s <- lm(tab[[12]] ~ poly(temps,3))
+		K_12s <- lm(tab[[13]] ~ poly(temps,3))
+		K_13s <- lm(tab[[14]] ~ poly(temps,3))
+		K_14s <- lm(tab[[15]] ~ poly(temps,3))
+		K_15s <- lm(tab[[16]] ~ poly(temps,3))
+		K_16s <- lm(tab[[17]] ~ poly(temps,3))
+
+		Kw <- as.numeric(predict(Kws,newdata=data.frame(temps=Tc)))
+		K_2 <- as.numeric(predict(K_2s,newdata=data.frame(temps=Tc)))
+		K_3 <- as.numeric(predict(K_3s,newdata=data.frame(temps=Tc)))
+		K_4 <- as.numeric(predict(K_4s,newdata=data.frame(temps=Tc)))
+		K_5 <- as.numeric(predict(K_5s,newdata=data.frame(temps=Tc)))
+		K_6 <- as.numeric(predict(K_6s,newdata=data.frame(temps=Tc)))
+		K_7 <- as.numeric(predict(K_7s,newdata=data.frame(temps=Tc)))
+		K_8 <- as.numeric(predict(K_8s,newdata=data.frame(temps=Tc)))
+		K_9 <- as.numeric(predict(K_9s,newdata=data.frame(temps=Tc)))
+		K_10 <- as.numeric(predict(K_10s,newdata=data.frame(temps=Tc)))
+		K_11 <- as.numeric(predict(K_11s,newdata=data.frame(temps=Tc)))
+		K_12 <- as.numeric(predict(K_12s,newdata=data.frame(temps=Tc)))
+		K_13 <- as.numeric(predict(K_13s,newdata=data.frame(temps=Tc)))
+		K_14 <- as.numeric(predict(K_14s,newdata=data.frame(temps=Tc)))
+		K_15 <- as.numeric(predict(K_15s,newdata=data.frame(temps=Tc)))
+		K_16 <- as.numeric(predict(K_16s,newdata=data.frame(temps=Tc)))
+	line <- c(Tc,Kw,K_2,K_3,K_4,K_5,K_6,K_7,K_8,K_9,K_10,K_11,K_12,K_13,K_14,K_15,K_16)
+	tab <- rbind(tab,line)
+}
+
+
+	kt <- subset(tab, T== Tc)
+	ks <- sapply(1:length(products),function(k) kt[[which(colnames(kt) == products[k])]])
 
 if(!is.null(exprod)){
 	products <- c(products,exprod)
