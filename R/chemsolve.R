@@ -3,16 +3,16 @@
 #' @param Tc Temperature (degrees C - between 300 and 400)
 #' @param Nat Sodium concentration (mol/kg); total 
 #' @param Kt Potassium (mol/kg); total
-#' @param Clt Chlorine (mol/kg); total
+#' @param Clt Chloride (mol/kg); total
 #' @param SO4t Sulphate (mol/kg); total
 #' @param Cat Calcium (mol/kg); total
 #' @param Mgt Magnesium (mol/kg); total
 #' @param start Initial guess for the calculated equalibrium concentration of the basis species
 #' @param maxitr Maximum number of iteration
 #' @param exprod A vector of the names of the complexes which dissociate to form the basis species
-#' @param exconstit  A vector of the chemical symbols names of the complexes in terms of the basis species
+#' @param exconstit  A vector of the chemical symbol names of the the basis species that are the products of the dissociation equilibium for each complex
 #' @param exnumz A vector of the stiochiometery given by the equilibrium reaction for each of the complexes
-#' @param excharges A vector of the charage of the complex species
+#' @param excharges A vector of the charge of the complex species
 #' @param exK A vector of the log K of the dissociation constants
 #' @param exa A vector of the ion size paramters for the complexes
 #' @details A wrapper for the chemsolve_generic function that allow easy addition of product species. If you want to add additional reactant species (i.e. basis species) then the chemsolve_generic function must be used.
