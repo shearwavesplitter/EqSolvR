@@ -9,14 +9,15 @@
 #' @param Mgt Magnesium (mol/kg); total
 #' @param start Initial guess for the calculated equalibrium concentration of the basis species
 #' @param maxitr Maximum number of iteration
-#' @param exprod A vector of the names of the complexes which dissociate to form the basis species
-#' @param exconstit  A vector of the chemical symbol names of the the basis species that are the products of the dissociation equilibium for each complex
+#' The basis species are:  Na+, K+, Mg2+, Ca2+, Cl-, SO42-. The default complexes are:  NaCl°, KCl°, HCl°, KOH°, NaOH°, KSO4-, NaSO4-,HSO4-,CaSO4°,MgSO4°, MgCl+,CaCl+,CaCl2°,MgOH+,CaOH+.Additional complexes based on the existing basis species are easily added.
+#' If additional complexes are required then these may be added as follows (see example below):
+#' @param exprod A vector of the names of the complexe(s)
+#' @param exconstit  A vector of the chemical symbol names of the the basis species that are constitute each of the the additional complexes
 #' @param exnumz A vector of the stiochiometery given by the equilibrium reaction for each of the complexes
 #' @param excharges A vector of the charge of the complex species
 #' @param exK A vector of the log K of the dissociation constants
 #' @param exa A vector of the ion size paramters for the complexes
-#' @details A wrapper for the chemsolve_generic function that allow easy addition of product species. If you want to add additional reactant species (i.e. basis species) then the chemsolve_generic function must be used.
-#' The basis species are:  Na+, K+, Mg2+, Ca2+, Cl-, SO42-. The default complexes are:  NaCl°, KCl°, HCl°, KOH°, NaOH°, KSO4-, NaSO4-,HSO4-,CaSO4°,MgSO4°, MgCl+,CaCl+,CaCl2°,MgOH+,CaOH+.Additional complexes based on the existing basis species are easily added. \cr
+#' @details A wrapper for the chemsolve_generic function that allow easy addition of product species.
 #' Use the generic function (chemsolve_generic) if new basis species need to be added or if the log K/temperature range is extended (up or down). \cr
 #' Charge balance is fixed on H+. \cr
 #' Normally total initial moles anions = total moles cations  but excess anions will be balanced by more H+ and vice versa. It is important to choose good initial starting values; for H+, OH- and equilibrium concentrations of the basis species. \cr
@@ -30,7 +31,7 @@
 #' @examples
 #' ## Add H2SO4 as an additional complex given the existing list of basis species
 #'
-#' chemsolve(exprod="H2SO4",exconstit="H","H","SO4",exnumz=3,excharges=0,exa=0,exK=-6)
+#' chemsolve(exprod="H2SO4",exconstit=c("H","H","SO4"),exnumz=3,excharges=0,exa=0,exK=-6)
 chemsolve <- function(Tc=300,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,exprod=NULL,exconstit=NULL,exnumz=NULL,excharges=NULL,exa=NULL,exK=NULL) {
 spec <- c("Na","K","Cl","SO4","Ca","Mg")
 concz <- c(Nat,Kt,Clt,SO4t,Cat,Mgt)
