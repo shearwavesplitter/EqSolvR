@@ -30,8 +30,13 @@
 #' @export
 #' @examples
 #' ## Add H2SO4 as an additional complex given the existing list of basis species
-#'
 #' chemsolve(exprod="H2SO4",exconstit=c("H","H","SO4"),exnumz=3,excharges=0,exa=0,exK=-6)
+#'
+#' ##Determine the equilibria at a range of temperatures 
+#' temps <- seq(300,400,10) #A vector of temperatures repeating every 10 degrees from 300 to 400
+#' r <- lapply(temps,chemsolve,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1) #Creates a list of the results
+#' r[[1]] #Display results from first temperature
+#' r[[10]] #Display the results of the 10th temperature
 chemsolve <- function(Tc=300,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,exprod=NULL,exconstit=NULL,exnumz=NULL,excharges=NULL,exa=NULL,exK=NULL) {
 spec <- c("Na","K","Cl","SO4","Ca","Mg")
 concz <- c(Nat,Kt,Clt,SO4t,Cat,Mgt)
