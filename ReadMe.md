@@ -26,6 +26,7 @@ library('EqSolvR')
 ```r
 library('EqSolvR')
 ## Run the solver with the default species of Na, Cl, K, SO4, Ca, and Mg 
+## This function charge balances the initial species against Cl
 ## Add H2SO4 as an additional product
 d <- chemsolve(Tc=300,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1,exprod="H2SO4",exconstit=c("H","H","SO4"),exnumz=3,excharges=0,exa=0,exK=-6)
 ```
