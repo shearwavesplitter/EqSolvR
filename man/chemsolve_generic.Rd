@@ -9,7 +9,7 @@ chemsolve_generic(solvent = c("H", "OH"), solvcharge = c("1", "-1"),
   "SO4", "Ca", "Mg"), conc = c(0.2, 0.2, 0.4, 0.2, 0.1, 0.1), a = c(4, 3,
   3.5, 4, 6, 8), charges = c(1, 1, -1, -2, 2, 2), prod, Tc = 300,
   start = c(1e-05, 1e-05, 0.15, 0.15, 0.15, 0.104756881, 0.05, 0.05),
-  maxitr = 100)
+  maxitr = 100, bal = NULL)
 }
 \arguments{
 \item{solvent}{Symbols for solvent species (should not be changed)}

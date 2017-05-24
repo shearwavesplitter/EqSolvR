@@ -7,7 +7,8 @@
 chemsolve(Tc = 300, Nat = 0.2, Kt = 0.2, Clt = 0.4, SO4t = 0.2,
   Cat = 0.1, Mgt = 0.1, start = c(1e-05, 1e-05, 0.15, 0.15, 0.15,
   0.104756881, 0.05, 0.05), maxitr = 100, exprod = NULL, exconstit = NULL,
-  exnumz = NULL, excharges = NULL, exa = NULL, exK = NULL)
+  exnumz = NULL, excharges = NULL, exa = NULL, exK = NULL,
+  Clbal = TRUE)
 }
 \arguments{
 \item{Tc}{Temperature (degrees C - between 300 and 400)}

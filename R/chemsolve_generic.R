@@ -24,7 +24,7 @@
 #' Run chemsolve with Na, K, and Cl basis species at 300 degrees
 #' Chemsolve_generic(species=c("Na","K","Cl"), conc=c(0.2,0.2,0.4),
 #' + a=c(4,3,3.5),charges=c(1,1,-1),prod,Tc=300,start=c(0.00001,0.00001,0.15),prod=products)
-chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c("9","4"),Ksoln=-10.908,species=c("Na","K","Cl","SO4","Ca","Mg"), conc=c(0.2,0.2,0.4,0.2,0.1,0.1),a=c(4,3,3.5,4,6,8),charges=c(1,1,-1,-2,2,2),prod,Tc=300,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100){
+chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c("9","4"),Ksoln=-10.908,species=c("Na","K","Cl","SO4","Ca","Mg"), conc=c(0.2,0.2,0.4,0.2,0.1,0.1),a=c(4,3,3.5,4,6,8),charges=c(1,1,-1,-2,2,2),prod,Tc=300,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,bal=NULL){
 	Tk <- Tc+273.15
 
 	if (Tc < 300){
@@ -32,6 +32,21 @@ chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c
 	} else {
 		Bdot <- 0
 	}
+
+
+	## Adjust one thing so that initial concentrations charge balance to zero
+	if(!is.null(bal)){
+		whb <- which(species == bal)
+		cnc2 <- conc[-whb]
+		chrg2 <- charges[-whb]
+		ccprod <- cnc2*chrg2
+		sumprod <- -sum(ccprod)
+		newconc <- sumprod/charges[whb]
+		print(paste0("Charge balance on ",species[whb]))
+		print(paste0("New ",species[whb]," concentration of ",newconc))
+		conc[whb] <- newconc
+	}
+	##
 
 	pl <- length(prod)	
 	rl <- length(species)
