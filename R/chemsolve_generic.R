@@ -42,7 +42,7 @@ chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c
 		ccprod <- cnc2*chrg2
 		sumprod <- -sum(ccprod)
 		newconc <- sumprod/charges[whb]
-		if(newconc < 0){print("Negative concentration is not possible: Continuing with original concentration");print("Consider changing balance species")}else{
+		if(newconc < 0){print("Negative concentration is not possible: Continuing with original concentration");print("Consider changing balance species");warning("Initial concentrations not charge balanced")}else{
 		print(paste0("Charge balance on ",species[whb]))
 		print(paste0("New ",species[whb]," initial concentration of ",newconc))
 		conc[whb] <- newconc
