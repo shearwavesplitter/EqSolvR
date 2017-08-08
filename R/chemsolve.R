@@ -19,8 +19,13 @@
 #' @param exa A vector of the ion size paramters for the complexes
 #' @details A wrapper for the chemsolve_generic function that allow easy addition of product species.
 #' Use the generic function (chemsolve_generic) if new basis species need to be added or if the log K/temperature range is extended (up or down). \cr
-#' Charge balance is fixed on H+. \cr
-#' Normally total initial moles anions = total moles cations  but excess anions will be balanced by more H+ and vice versa. It is important to choose good initial starting values; for H+, OH- and equilibrium concentrations of the basis species. \cr
+#' Normally total moles anions = total moles cations. \cr
+#' The charge balance (without any speciation) is adjusted to zero \cr
+#' by balancing against Cl as otherwise the calculation is too sensitive to H+. \cr
+#' Choose reasonable starting values; for H+, OH- and equilibrium concentrations of the basis species. \cr
+#' If negative concentrations are calculated  choose better initial starting values. \cr
+#' To exclude a  basis value set the basis concentration to zero and the concentrations of this and the derived species \cr
+#' will be vanishing small and can be ignored. \cr
 #' Complex dissociation constants (Log K)  are from SupCrt 92  slop98.dat \url{http://geopig.asu.edu/?q=tools} \cr
 #' The Debye_Hückel parameters (A, B & Bdot) equations are polynomial fits to data from tables in Helgeson (1969)  Helgeson & Kirkham (1974) by Nellie Olsen (Note Bdot not used at temperatures  greater than 300°C). \cr
 #' Helgeson H. C. (1969) Thermodynamics of hydrothermal systems at elevated temperatures and pressures. American Journal of Science 267, 729-804. \cr
