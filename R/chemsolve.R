@@ -7,23 +7,23 @@
 #' @param SO4t Sulphate (mol/kg); total
 #' @param Cat Calcium (mol/kg); total
 #' @param Mgt Magnesium (mol/kg); total
-#' @param start Initial guess for the calculated equalibrium concentration of the basis species
-#' @param maxitr Maximum number of iteration
+#' @param start Initial guess for the calculated equilbrium concentrations of the basis species
+#' @param maxitr Maximum number of iterations
 #' The basis species are:  Na+, K+, Mg2+, Ca2+, Cl-, SO42-. The default complexes are:  NaCl°, KCl°, HCl°, KOH°, NaOH°, KSO4-, NaSO4-,HSO4-,CaSO4°,MgSO4°, MgCl+,CaCl+,CaCl2°,MgOH+,CaOH+.Additional complexes based on the existing basis species are easily added.
 #' If additional complexes are required then these may be added as follows (see example below):
-#' @param exprod A vector of the names of the complexe(s)
+#' @param exprod A vector of the names of the complex(es)
 #' @param exconstit  A vector of the chemical symbol names of the the basis species that are constitute each of the the additional complexes
-#' @param exnumz A vector of the stiochiometery given by the equilibrium reaction for each of the complexes
+#' @param exnumz A vector of the stiochiometry given by the equilibrium reaction for each of the complexes
 #' @param excharges A vector of the charge of the complex species
 #' @param exK A vector of the log K of the dissociation constants
-#' @param exa A vector of the ion size paramters for the complexes
+#' @param exa A vector of the ion size parameters for the complexes
 #' @details A wrapper for the chemsolve_generic function that allow easy addition of product species.
 #' Use the generic function (chemsolve_generic) if new basis species need to be added or if the log K/temperature range is extended (up or down). \cr
 #' Normally total moles anions = total moles cations. \cr
 #' The charge balance (without any speciation) is adjusted to zero \cr
 #' by balancing against Cl as otherwise the calculation is too sensitive to H+. \cr
 #' Choose reasonable starting values; for H+, OH- and equilibrium concentrations of the basis species. \cr
-#' If negative concentrations are calculated  choose better initial starting values. \cr
+#' If negative concentrations are calculated,  choose better initial starting values. \cr
 #' To exclude a  basis value set the basis concentration to zero and the concentrations of this and the derived species \cr
 #' will be vanishing small and can be ignored. \cr
 #' Complex dissociation constants (Log K)  are from SupCrt 92  slop98.dat \url{http://geopig.asu.edu/?q=tools} \cr
