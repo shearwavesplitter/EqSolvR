@@ -7,8 +7,7 @@
 chemsolve(Tc = 400, Nat = 0.2, Kt = 0.2, Clt = 0.4, SO4t = 0.2,
   Cat = 0.1, Mgt = 0.1, start = c(1e-05, 1e-05, 0.15, 0.15, 0.15,
   0.104756881, 0.05, 0.05), maxitr = 100, exprod = NULL, exconstit = NULL,
-  exnumz = NULL, excharges = NULL, exa = NULL, exK = NULL,
-  Clbal = TRUE)
+  exnumz = NULL, excharges = NULL, exa = NULL, exK = NULL, bal = "Cl")
 }
 \arguments{
 \item{Tc}{Temperature (degrees C - between 300 and 400)}
@@ -27,21 +26,21 @@ chemsolve(Tc = 400, Nat = 0.2, Kt = 0.2, Clt = 0.4, SO4t = 0.2,
 
 \item{start}{Initial guess for the calculated equilbrium concentrations of the basis species}
 
-\item{maxitr}{Maximum number of iterations
-The basis species are:  Na+, K+, Mg2+, Ca2+, Cl-, SO42-. The default complexes are:  NaCl°, KCl°, HCl°, KOH°, NaOH°, KSO4-, NaSO4-,HSO4-,CaSO4°,MgSO4°, MgCl+,CaCl+,CaCl2°,MgOH+,CaOH+.Additional complexes based on the existing basis species are easily added.
-If additional complexes are required then these may be added as follows (see example below):}
+\item{maxitr}{Maximum number of iterations}
 
-\item{exprod}{A vector of the names of the complex(es)}
+\item{exprod}{A vector of the names of the additional complex(es)}
 
 \item{exconstit}{A vector of the chemical symbol names of the the basis species that are constitute each of the the additional complexes}
 
-\item{exnumz}{A vector of the stiochiometry given by the equilibrium reaction for each of the complexes}
+\item{exnumz}{A vector of the stiochiometry given by the equilibrium reaction for each of the additional complexes}
 
-\item{excharges}{A vector of the charge of the complex species}
+\item{excharges}{A vector of the charge of the additional complex species}
 
-\item{exa}{A vector of the ion size parameters for the complexes}
+\item{exa}{A vector of the ion size parameters for the complexes of the additional complex species}
 
-\item{exK}{A vector of the log K of the dissociation constants}
+\item{exK}{A vector of the log K of the dissociation constants of the additional complex species}
+
+\item{bal}{Species to balance against (Defaults to Cl, can also be set to NULL for none)}
 }
 \value{
 A list containing the concentrations, activity coefficients, and pH at equilibrium
@@ -62,11 +61,14 @@ will be vanishing small and can be ignored. \cr
 Complex dissociation constants (Log K)  are from SupCrt 92  slop98.dat \url{http://geopig.asu.edu/?q=tools} \cr
 The Debye_Hückel parameters (A, B) equations are polynomial fits to data at 0.5 kb from tables in Helgeson & Kirkham (1974).\cr
 Note Bdot is not used.\cr
-Helgeson H. C. and Kirkham D. H. (1974) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures: II. Debye-Hückel parameters for activity coefficients and relative partial molar properties American Journal of Science 274, 1199-1261.
+Helgeson H. C. and Kirkham D. H. (1974) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures: II. Debye-Hückel parameters for activity coefficients and relative partial molar properties American Journal of Science 274, 1199-1261. \cr
+The basis species are:  Na+, K+, Mg2+, Ca2+, Cl-, SO42-. The default complexes are:  NaCl°, KCl°, HCl°, KOH°, NaOH°, KSO4-, NaSO4-,HSO4-,CaSO4°,MgSO4°, MgCl+,CaCl+,CaCl2°,MgOH+,CaOH+. 
+Additional complexes based on the existing basis species can easily be added (see example below)
 }
 \examples{
 ## Add H2SO4 as an additional complex given the existing list of basis species
-chemsolve(exprod="H2SO4",exconstit=c("H","H","SO4"),exnumz=3,excharges=0,exa=0,exK=-6)
+chemsolve(exprod=c("H2SO4","MgCl2"),exconstit=c("H","H","SO4","Mg","Cl","Cl"),
+exnumz=c(3,3),excharges=c(0,0),exa=c(0,0),exK=c(-6,-3))
 
 ##Determine the equilibria at a range of temperatures 
 temps <- seq(300,400,10) #A vector of temperatures repeating every 10 degrees from 300 to 400

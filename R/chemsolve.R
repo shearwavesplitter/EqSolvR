@@ -9,14 +9,13 @@
 #' @param Mgt Magnesium (mol/kg); total
 #' @param start Initial guess for the calculated equilbrium concentrations of the basis species
 #' @param maxitr Maximum number of iterations
-#' The basis species are:  Na+, K+, Mg2+, Ca2+, Cl-, SO42-. The default complexes are:  NaCl°, KCl°, HCl°, KOH°, NaOH°, KSO4-, NaSO4-,HSO4-,CaSO4°,MgSO4°, MgCl+,CaCl+,CaCl2°,MgOH+,CaOH+.Additional complexes based on the existing basis species are easily added.
-#' If additional complexes are required then these may be added as follows (see example below):
-#' @param exprod A vector of the names of the complex(es)
+#' @param exprod A vector of the names of the additional complex(es)
 #' @param exconstit  A vector of the chemical symbol names of the the basis species that are constitute each of the the additional complexes
-#' @param exnumz A vector of the stiochiometry given by the equilibrium reaction for each of the complexes
-#' @param excharges A vector of the charge of the complex species
-#' @param exK A vector of the log K of the dissociation constants
-#' @param exa A vector of the ion size parameters for the complexes
+#' @param exnumz A vector of the stiochiometry given by the equilibrium reaction for each of the additional complexes
+#' @param excharges A vector of the charge of the additional complex species
+#' @param exK A vector of the log K of the dissociation constants of the additional complex species 
+#' @param exa A vector of the ion size parameters for the complexes of the additional complex species 
+#' @param bal Species to balance against (Defaults to Cl, can also be set to NULL for none)
 #' @details A wrapper for the chemsolve_generic function that allow easy addition of product species.
 #' Use the generic function (chemsolve_generic) if new basis species need to be added or if the log K/temperature range is extended (up or down). \cr
 #' Normally total moles anions = total moles cations. \cr
@@ -29,20 +28,23 @@
 #' Complex dissociation constants (Log K)  are from SupCrt 92  slop98.dat \url{http://geopig.asu.edu/?q=tools} \cr
 #' The Debye_Hückel parameters (A, B) equations are polynomial fits to data at 0.5 kb from tables in Helgeson & Kirkham (1974).\cr
 #' Note Bdot is not used.\cr
-#' Helgeson H. C. and Kirkham D. H. (1974) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures: II. Debye-Hückel parameters for activity coefficients and relative partial molar properties American Journal of Science 274, 1199-1261.
+#' Helgeson H. C. and Kirkham D. H. (1974) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures: II. Debye-Hückel parameters for activity coefficients and relative partial molar properties American Journal of Science 274, 1199-1261. \cr
+#' The basis species are:  Na+, K+, Mg2+, Ca2+, Cl-, SO42-. The default complexes are:  NaCl°, KCl°, HCl°, KOH°, NaOH°, KSO4-, NaSO4-,HSO4-,CaSO4°,MgSO4°, MgCl+,CaCl+,CaCl2°,MgOH+,CaOH+. 
+#' Additional complexes based on the existing basis species can easily be added (see example below)
 #' @return A list containing the concentrations, activity coefficients, and pH at equilibrium
 #' @importFrom rootSolve multiroot
 #' @export
 #' @examples
 #' ## Add H2SO4 as an additional complex given the existing list of basis species
-#' chemsolve(exprod="H2SO4",exconstit=c("H","H","SO4"),exnumz=3,excharges=0,exa=0,exK=-6)
+#' chemsolve(exprod=c("H2SO4","MgCl2"),exconstit=c("H","H","SO4","Mg","Cl","Cl"),
+#' exnumz=c(3,3),excharges=c(0,0),exa=c(0,0),exK=c(-6,-3))
 #'
 #' ##Determine the equilibria at a range of temperatures 
 #' temps <- seq(300,400,10) #A vector of temperatures repeating every 10 degrees from 300 to 400
 #' r <- lapply(temps,chemsolve,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1) #Creates a list of the results
 #' r[[1]] #Display results from first temperature
 #' r[[10]] #Display the results of the 10th temperature
-chemsolve <- function(Tc=400,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,exprod=NULL,exconstit=NULL,exnumz=NULL,excharges=NULL,exa=NULL,exK=NULL,Clbal=TRUE) {
+chemsolve <- function(Tc=400,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,exprod=NULL,exconstit=NULL,exnumz=NULL,excharges=NULL,exa=NULL,exK=NULL,bal="Cl") {
 spec <- c("Na","K","Cl","SO4","Ca","Mg")
 concz <- c(Nat,Kt,Clt,SO4t,Cat,Mgt)
 speccharges <- c(1,1,-1,-2,2,2)
@@ -60,7 +62,6 @@ numz <- c(rep(2,12),3,2,2)
 charges <- c(-1,-1,-1,0,0,0,0,0,0,0,1,1,0,1,1)
 as <- c(4,4,4,0,0,0,0,0,0,0,8,6,0,8,6)
 
-if(Clbal){bal <- "Cl"}else{bal=NULL}  #Adjust Cl concentration so charges of reactants are balanced?
 
 ## Determine A and B
 temps <- ABtab$ABt

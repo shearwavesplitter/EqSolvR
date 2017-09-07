@@ -37,6 +37,8 @@ chemsolve_generic(solvent = c("H", "OH"), solvcharge = c("1", "-1"),
 \item{start}{Initial guess for the calculated equilibrium concentration of the basis species}
 
 \item{maxitr}{Maximum number of iterations}
+
+\item{bal}{The species to charge balance against (e.g. "Cl") or NULL for none}
 }
 \value{
 A list containing the concentrations, gamma values, and pH at equilibrium
@@ -52,8 +54,8 @@ A generic function to add any basis species, product species or if the log K/tem
 
 ## Define the product species NaCl and KCl
 products <- prods(names=c("NaCl","KCl"),number=c(2,2),
-+ species=c("Na","Cl","K","Cl"),K=c(-6.68,0.001),a=c(0,0))
+species=c("Na","Cl","K","Cl"),K=c(-6.68,0.001),a=c(0,0))
 Run chemsolve with Na, K, and Cl basis species at 300 degrees
 Chemsolve_generic(species=c("Na","K","Cl"), conc=c(0.2,0.2,0.4),
-+ a=c(4,3,3.5),charges=c(1,1,-1),prod,start=c(0.00001,0.00001,0.15),prod=products)
+a=c(4,3,3.5),charges=c(1,1,-1),prod,start=c(0.00001,0.00001,0.15),prod=products)
 }
