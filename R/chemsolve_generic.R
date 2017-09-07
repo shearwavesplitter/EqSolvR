@@ -4,7 +4,9 @@
 #' @param conc Total concentrations of the basis species (mol/kg)
 #' @param a Ion size parameters for the basis species
 #' @param prod Dataframe detailing the derived species
-#' @param Tc Temperature (degrees centigrade)
+#' @param A A value (Defaults to value for 300 degrees C and 0.5kb)
+#' @param B B value (Defaults to value for 300 degrees C and 0.5kb)
+#' @param Bdot Bdot value is zero by default
 #' @param start Initial guess for the calculated equilibrium concentration of the basis species
 #' @param maxitr Maximum number of iterations
 #' @param solvent Symbols for solvent species (should not be changed)
@@ -24,14 +26,8 @@
 #' Run chemsolve with Na, K, and Cl basis species at 300 degrees
 #' Chemsolve_generic(species=c("Na","K","Cl"), conc=c(0.2,0.2,0.4),
 #' + a=c(4,3,3.5),charges=c(1,1,-1),prod,Tc=300,start=c(0.00001,0.00001,0.15),prod=products)
-chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c("9","4"),Ksoln=-10.908,species=c("Na","K","Cl","SO4","Ca","Mg"), conc=c(0.2,0.2,0.4,0.2,0.1,0.1),a=c(4,3,3.5,4,6,8),charges=c(1,1,-1,-2,2,2),prod,Tc=300,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,bal=NULL){
-	Tk <- Tc+273.15
+chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c("9","4"),Ksoln=-10.908,species=c("Na","K","Cl","SO4","Ca","Mg"), conc=c(0.2,0.2,0.4,0.2,0.1,0.1),a=c(4,3,3.5,4,6,8),charges=c(1,1,-1,-2,2,2),prod,A=1.0529,B=0.3850,Bdot=0,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,bal=NULL){
 
-	if (Tc < 300){
-		Bdot <- -0.00000030611*Tk*Tk+0.0001027*Tk+0.038646;-0.0000028612*Tk*Tk+0.00094299*Tk-0.026621
-	} else {
-		Bdot <- 0
-	}
 
 
 	## Adjust one thing so that initial concentrations charge balance to zero
@@ -194,8 +190,6 @@ chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c
 		xs <- x
 		I <- 0.5*sum(xs*full$charge^2)
 		a <- full$a
-		B <- 0.00025587*Tk+0.2487
-		A <- 0.00000000041775*((Tk)^4)-0.00000069009*((Tk)^3)+0.00042737*((Tk)^2)-0.11558*(Tk)+11.975
 		logg <- ((A*full$charge^2*sqrt(I))/(1+a*B*sqrt(I)))+Bdot*I
 		g <- 10^(-logg)
 		#Recalculate  X_9-23
@@ -208,8 +202,6 @@ chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c
 
 		xs <- x
 		I <- 0.5*sum(xs*full$charge^2)
-		B <- 0.00025587*Tk+0.2487
-		A <- 0.00000000041775*((Tk)^4)-0.00000069009*((Tk)^3)+0.00042737*((Tk)^2)-0.11558*(Tk)+11.975
 		logg <- ((A*full$charge^2*sqrt(I))/(1+a*B*sqrt(I)))+Bdot*I	
 		g <- 10^(-logg)
 
