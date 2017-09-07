@@ -1,5 +1,5 @@
 #' @title Mass balance and charge solver
-#' @description Mass balance and charge balance solver for chemical equilibria. 
+#' @description Mass balance and charge balance solver for chemical equilibria at 0.5 kb.
 #' @param Tc Temperature (degrees C - between 300 and 400)
 #' @param Nat Sodium concentration (mol/kg); total 
 #' @param Kt Potassium (mol/kg); total
@@ -27,8 +27,8 @@
 #' To exclude a  basis value set the basis concentration to zero and the concentrations of this and the derived species \cr
 #' will be vanishing small and can be ignored. \cr
 #' Complex dissociation constants (Log K)  are from SupCrt 92  slop98.dat \url{http://geopig.asu.edu/?q=tools} \cr
-#' The Debye_Hückel parameters (A, B & Bdot) equations are polynomial fits to data from tables in Helgeson (1969)  Helgeson & Kirkham (1974) by Nellie Olsen (Note Bdot not used at temperatures  greater than 300°C). \cr
-#' Helgeson H. C. (1969) Thermodynamics of hydrothermal systems at elevated temperatures and pressures. American Journal of Science 267, 729-804. \cr
+#' The Debye_Hückel parameters (A, B) equations are polynomial fits to data at 0.5 kb from tables in Helgeson & Kirkham (1974).\cr
+#' Note Bdot is not used.\cr
 #' Helgeson H. C. and Kirkham D. H. (1974) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures: II. Debye-Hückel parameters for activity coefficients and relative partial molar properties American Journal of Science 274, 1199-1261.
 #' @return A list containing the concentrations, activity coefficients, and pH at equilibrium
 #' @importFrom rootSolve multiroot
@@ -48,6 +48,9 @@ concz <- c(Nat,Kt,Clt,SO4t,Cat,Mgt)
 speccharges <- c(1,1,-1,-2,2,2)
 speca <- c(4,3,3.5,4,6,8)
 
+ABt <- c(250:25:450)	
+As <- c(0.8822,0.9595,1.0529,1.1705,1.3267,1.5464,1.8789,2.4301,3.3553)
+Bs <- c(0.3729,0.3787,0.3850,0.3921,0.4004,0.4104,0.4230,0.4386,0.4548)
 
 products <- c("NaSO4","HSO4","KSO4","NaCl","KCl","HCl","KOH","NaOH","CaSO4","MgSO4","MgCl","CaCl","CaCl2","MgOH","CaOH")
 constit <- c("Na","SO4","H","SO4","K","SO4","Na","Cl","K","Cl","H","Cl","K","OH","Na","OH","Ca","SO4","Mg","SO4","Mg","Cl","Ca","Cl","Ca","Cl","Cl","Mg","OH","Ca","OH")
@@ -117,7 +120,7 @@ if(!is.null(exprod)){
 }
 prodz <- prods(names=products,number=numz,species=constit,K=ks,a=as)
 
-res <- chemsolve_generic(species=spec,conc=concz,a=speca,charges=speccharges,prod=prodz,Tc=Tc,start=start,maxitr=maxitr,bal=bal)
+res <- chemsolve_generic(species=spec,conc=concz,a=speca,charges=speccharges,prod=prodz,start=start,maxitr=maxitr,bal=bal,A=Aspec,B=Bspec)
 
 return(res)
  
