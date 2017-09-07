@@ -5,7 +5,7 @@
 #' @param a Ion size parameters for the basis species
 #' @param prod Dataframe detailing the derived species
 #' @param Tc Temperature (degrees centigrade)
-#' @param start Initial guess for the calculated equalibrium concentration of the basis species
+#' @param start Initial guess for the calculated equilibrium concentration of the basis species
 #' @param maxitr Maximum number of iterations
 #' @param solvent Symbols for solvent species (should not be changed)
 #' @param solvcharge Charges for solvent species (should not be changed)
