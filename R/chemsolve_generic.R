@@ -1,18 +1,18 @@
 #' @title Mass balance and charge solver for general cases
-#' @description Mass balance and charge balance solver for chemical equilibria
+#' @description Mass balance and charge balance solver for chemical equilibria. This is the workhorse for chemsolve and requires the prods function
 #' @param species Chemical symbols of the basis species
 #' @param conc Total concentrations of the basis species (mol/kg)
 #' @param a Ion size parameters for the basis species
-#' @param prod Dataframe detailing the derived species
+#' @param prod Dataframe detailing the derived species (Output from prods function)
 #' @param A A value (Defaults to value for 300 degrees C and 0.5kb)
 #' @param B B value (Defaults to value for 300 degrees C and 0.5kb)
 #' @param Bdot Bdot value is zero by default
 #' @param start Initial guess for the calculated equilibrium concentration of the basis species
 #' @param maxitr Maximum number of iterations
-#' @param solvent Symbols for solvent species (should not be changed)
-#' @param solvcharge Charges for solvent species (should not be changed)
-#' @param solva Ion size parameters (should not be changed)
-#' @param Ksoln log K of the solvent (should not be changed)
+#' @param solvent Symbols for solvent species (should not be changed for water)
+#' @param solvcharge Charges for solvent species (should not be changed for water)
+#' @param solva Ion size parameters (should not be changed for water)
+#' @param Ksoln log K of the solvent (Water at 300 degrees C - changes with temperature)
 #' @return A list containing the concentrations, gamma values, and pH at equilibrium
 #' @details A generic function to add any basis species, product species or if the log K/temperature range need to be extended. Requires all parameters (e.g. log K at the given temperature). 
 #' @importFrom rootSolve multiroot
@@ -25,7 +25,7 @@
 #' + species=c("Na","Cl","K","Cl"),K=c(-6.68,0.001),a=c(0,0))
 #' Run chemsolve with Na, K, and Cl basis species at 300 degrees
 #' Chemsolve_generic(species=c("Na","K","Cl"), conc=c(0.2,0.2,0.4),
-#' + a=c(4,3,3.5),charges=c(1,1,-1),prod,Tc=300,start=c(0.00001,0.00001,0.15),prod=products)
+#' + a=c(4,3,3.5),charges=c(1,1,-1),prod,start=c(0.00001,0.00001,0.15),prod=products)
 chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c("9","4"),Ksoln=-10.908,species=c("Na","K","Cl","SO4","Ca","Mg"), conc=c(0.2,0.2,0.4,0.2,0.1,0.1),a=c(4,3,3.5,4,6,8),charges=c(1,1,-1,-2,2,2),prod,A=1.0529,B=0.3850,Bdot=0,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,bal=NULL){
 
 
@@ -226,6 +226,9 @@ chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c
 	#res$logK <- k
 	res$estim.precis <- ss$estim.precis
 	res$f.root <- ss$f.root
+	res$A <- A
+	res$B <- B
+	res$Bdot <- Bdot
 	print(paste0("Iterations: ",it))
 
 	#nat <- f[5]+f[9]+f[12]+f[16]

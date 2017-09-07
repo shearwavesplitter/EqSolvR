@@ -7,18 +7,18 @@
 chemsolve_generic(solvent = c("H", "OH"), solvcharge = c("1", "-1"),
   solva = c("9", "4"), Ksoln = -10.908, species = c("Na", "K", "Cl",
   "SO4", "Ca", "Mg"), conc = c(0.2, 0.2, 0.4, 0.2, 0.1, 0.1), a = c(4, 3,
-  3.5, 4, 6, 8), charges = c(1, 1, -1, -2, 2, 2), prod, Tc = 300,
-  start = c(1e-05, 1e-05, 0.15, 0.15, 0.15, 0.104756881, 0.05, 0.05),
-  maxitr = 100, bal = NULL)
+  3.5, 4, 6, 8), charges = c(1, 1, -1, -2, 2, 2), prod, A = 1.0529,
+  B = 0.385, Bdot = 0, start = c(1e-05, 1e-05, 0.15, 0.15, 0.15,
+  0.104756881, 0.05, 0.05), maxitr = 100, bal = NULL)
 }
 \arguments{
-\item{solvent}{Symbols for solvent species (should not be changed)}
+\item{solvent}{Symbols for solvent species (should not be changed for water)}
 
-\item{solvcharge}{Charges for solvent species (should not be changed)}
+\item{solvcharge}{Charges for solvent species (should not be changed for water)}
 
-\item{solva}{Ion size parameters (should not be changed)}
+\item{solva}{Ion size parameters (should not be changed for water)}
 
-\item{Ksoln}{log K of the solvent (should not be changed)}
+\item{Ksoln}{log K of the solvent (Water at 300 degrees C - changes with temperature)}
 
 \item{species}{Chemical symbols of the basis species}
 
@@ -26,11 +26,15 @@ chemsolve_generic(solvent = c("H", "OH"), solvcharge = c("1", "-1"),
 
 \item{a}{Ion size parameters for the basis species}
 
-\item{prod}{Dataframe detailing the derived species}
+\item{prod}{Dataframe detailing the derived species (Output from prods function)}
 
-\item{Tc}{Temperature (degrees centigrade)}
+\item{A}{A value (Defaults to value for 300 degrees C and 0.5kb)}
 
-\item{start}{Initial guess for the calculated equalibrium concentration of the basis species}
+\item{B}{B value (Defaults to value for 300 degrees C and 0.5kb)}
+
+\item{Bdot}{Bdot value is zero by default}
+
+\item{start}{Initial guess for the calculated equilibrium concentration of the basis species}
 
 \item{maxitr}{Maximum number of iterations}
 }
@@ -38,7 +42,7 @@ chemsolve_generic(solvent = c("H", "OH"), solvcharge = c("1", "-1"),
 A list containing the concentrations, gamma values, and pH at equilibrium
 }
 \description{
-Mass balance and charge balance solver for chemical equilibria
+Mass balance and charge balance solver for chemical equilibria. This is the workhorse for chemsolve and requires the prods function
 }
 \details{
 A generic function to add any basis species, product species or if the log K/temperature range need to be extended. Requires all parameters (e.g. log K at the given temperature).
@@ -51,5 +55,5 @@ products <- prods(names=c("NaCl","KCl"),number=c(2,2),
 + species=c("Na","Cl","K","Cl"),K=c(-6.68,0.001),a=c(0,0))
 Run chemsolve with Na, K, and Cl basis species at 300 degrees
 Chemsolve_generic(species=c("Na","K","Cl"), conc=c(0.2,0.2,0.4),
-+ a=c(4,3,3.5),charges=c(1,1,-1),prod,Tc=300,start=c(0.00001,0.00001,0.15),prod=products)
++ a=c(4,3,3.5),charges=c(1,1,-1),prod,start=c(0.00001,0.00001,0.15),prod=products)
 }

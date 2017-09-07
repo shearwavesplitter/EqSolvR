@@ -1,5 +1,5 @@
 #' @title Mass balance and charge solver
-#' @description Mass balance and charge balance solver for chemical equilibria at 0.5 kb.
+#' @description Mass balance and charge balance solver for chemical equilibria at 0.5 kb. This is a wrapper function for chemsolve_generic and prods.
 #' @param Tc Temperature (degrees C - between 300 and 400)
 #' @param Nat Sodium concentration (mol/kg); total 
 #' @param Kt Potassium (mol/kg); total
@@ -42,15 +42,17 @@
 #' r <- lapply(temps,chemsolve,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1) #Creates a list of the results
 #' r[[1]] #Display results from first temperature
 #' r[[10]] #Display the results of the 10th temperature
-chemsolve <- function(Tc=300,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,exprod=NULL,exconstit=NULL,exnumz=NULL,excharges=NULL,exa=NULL,exK=NULL,Clbal=TRUE) {
+chemsolve <- function(Tc=400,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,exprod=NULL,exconstit=NULL,exnumz=NULL,excharges=NULL,exa=NULL,exK=NULL,Clbal=TRUE) {
 spec <- c("Na","K","Cl","SO4","Ca","Mg")
 concz <- c(Nat,Kt,Clt,SO4t,Cat,Mgt)
 speccharges <- c(1,1,-1,-2,2,2)
 speca <- c(4,3,3.5,4,6,8)
 
-ABt <- c(250:25:450)	
+ABt <- seq(250,450,25)
 As <- c(0.8822,0.9595,1.0529,1.1705,1.3267,1.5464,1.8789,2.4301,3.3553)
 Bs <- c(0.3729,0.3787,0.3850,0.3921,0.4004,0.4104,0.4230,0.4386,0.4548)
+
+ABtab <- as.data.frame(cbind(ABt,As,Bs),stringsAsFactors=FALSE)
 
 products <- c("NaSO4","HSO4","KSO4","NaCl","KCl","HCl","KOH","NaOH","CaSO4","MgSO4","MgCl","CaCl","CaCl2","MgOH","CaOH")
 constit <- c("Na","SO4","H","SO4","K","SO4","Na","Cl","K","Cl","H","Cl","K","OH","Na","OH","Ca","SO4","Mg","SO4","Mg","Cl","Ca","Cl","Ca","Cl","Cl","Mg","OH","Ca","OH")
@@ -60,14 +62,31 @@ as <- c(4,4,4,0,0,0,0,0,0,0,8,6,0,8,6)
 
 if(Clbal){bal <- "Cl"}else{bal=NULL}  #Adjust Cl concentration so charges of reactants are balanced?
 
+## Determine A and B
+temps <- ABtab$ABt
+if(Tc %in% temps){
+Aspec <- ABtab$As[which(temps == Tc)]
+Bspec <- ABtab$Bs[which(temps == Tc)]
+
+}else{
+	print("Interpolating A and B")
+	if (Tc < min(temps)){warning("Caution: Temperature out of bounds for interpolation of A and B")}
+	if (Tc > max(temps)){warning("Caution: Temperature out of bounds for interpolation of A and B")}
+	Az <- lm(ABtab$As ~ poly(temps,3))
+	Bz <- lm(ABtab$Bs ~ poly(temps,3))
+	Aspec <- as.numeric(predict(Az,newdata=data.frame(temps=Tc)))
+	Bspec <- as.numeric(predict(Bz,newdata=data.frame(temps=Tc)))
+}
+
 ## Determine K
 tab <- ktable
 temps <- tab[[1]]
 if(Tc %in% tab[[1]]){
+Kw <- tab[which(tab[[1]] == Tc),which(colnames(tab) == "H2O")]
 }else{
 	print("Interpolating constants")
-	if (Tc < min(tab[[1]])){print("Caution: Temperature out of bounds for interpolation")}
-	if (Tc > max(tab[[1]])){print("Caution: Temperature out of bounds for interpolation")}
+	if (Tc < min(tab[[1]])){warning("Caution: Temperature out of bounds for interpolation for K")}
+	if (Tc > max(tab[[1]])){warning("Caution: Temperature out of bounds for interpolation for K")}
 	
 		Kws <- lm(tab[[2]] ~ poly(temps,3))
 		K_2s <- lm(tab[[3]] ~ poly(temps,3))
@@ -120,7 +139,7 @@ if(!is.null(exprod)){
 }
 prodz <- prods(names=products,number=numz,species=constit,K=ks,a=as)
 
-res <- chemsolve_generic(species=spec,conc=concz,a=speca,charges=speccharges,prod=prodz,start=start,maxitr=maxitr,bal=bal,A=Aspec,B=Bspec)
+res <- chemsolve_generic(species=spec,conc=concz,a=speca,charges=speccharges,prod=prodz,start=start,maxitr=maxitr,bal=bal,A=Aspec,B=Bspec,Ksoln=Kw)
 
 return(res)
  

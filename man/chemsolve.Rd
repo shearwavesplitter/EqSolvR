@@ -4,7 +4,7 @@
 \alias{chemsolve}
 \title{Mass balance and charge solver}
 \usage{
-chemsolve(Tc = 300, Nat = 0.2, Kt = 0.2, Clt = 0.4, SO4t = 0.2,
+chemsolve(Tc = 400, Nat = 0.2, Kt = 0.2, Clt = 0.4, SO4t = 0.2,
   Cat = 0.1, Mgt = 0.1, start = c(1e-05, 1e-05, 0.15, 0.15, 0.15,
   0.104756881, 0.05, 0.05), maxitr = 100, exprod = NULL, exconstit = NULL,
   exnumz = NULL, excharges = NULL, exa = NULL, exK = NULL,
@@ -25,21 +25,21 @@ chemsolve(Tc = 300, Nat = 0.2, Kt = 0.2, Clt = 0.4, SO4t = 0.2,
 
 \item{Mgt}{Magnesium (mol/kg); total}
 
-\item{start}{Initial guess for the calculated equalibrium concentration of the basis species}
+\item{start}{Initial guess for the calculated equilbrium concentrations of the basis species}
 
-\item{maxitr}{Maximum number of iteration
+\item{maxitr}{Maximum number of iterations
 The basis species are:  Na+, K+, Mg2+, Ca2+, Cl-, SO42-. The default complexes are:  NaCl°, KCl°, HCl°, KOH°, NaOH°, KSO4-, NaSO4-,HSO4-,CaSO4°,MgSO4°, MgCl+,CaCl+,CaCl2°,MgOH+,CaOH+.Additional complexes based on the existing basis species are easily added.
 If additional complexes are required then these may be added as follows (see example below):}
 
-\item{exprod}{A vector of the names of the complexe(s)}
+\item{exprod}{A vector of the names of the complex(es)}
 
 \item{exconstit}{A vector of the chemical symbol names of the the basis species that are constitute each of the the additional complexes}
 
-\item{exnumz}{A vector of the stiochiometery given by the equilibrium reaction for each of the complexes}
+\item{exnumz}{A vector of the stiochiometry given by the equilibrium reaction for each of the complexes}
 
 \item{excharges}{A vector of the charge of the complex species}
 
-\item{exa}{A vector of the ion size paramters for the complexes}
+\item{exa}{A vector of the ion size parameters for the complexes}
 
 \item{exK}{A vector of the log K of the dissociation constants}
 }
@@ -47,16 +47,21 @@ If additional complexes are required then these may be added as follows (see exa
 A list containing the concentrations, activity coefficients, and pH at equilibrium
 }
 \description{
-Mass balance and charge balance solver for chemical equilibria.
+Mass balance and charge balance solver for chemical equilibria at 0.5 kb. This is a wrapper function for chemsolve_generic and prods.
 }
 \details{
 A wrapper for the chemsolve_generic function that allow easy addition of product species.
 Use the generic function (chemsolve_generic) if new basis species need to be added or if the log K/temperature range is extended (up or down). \cr
-Charge balance is fixed on H+. \cr
-Normally total initial moles anions = total moles cations  but excess anions will be balanced by more H+ and vice versa. It is important to choose good initial starting values; for H+, OH- and equilibrium concentrations of the basis species. \cr
+Normally total moles anions = total moles cations. \cr
+The charge balance (without any speciation) is adjusted to zero \cr
+by balancing against Cl as otherwise the calculation is too sensitive to H+. \cr
+Choose reasonable starting values; for H+, OH- and equilibrium concentrations of the basis species. \cr
+If negative concentrations are calculated,  choose better initial starting values. \cr
+To exclude a  basis value set the basis concentration to zero and the concentrations of this and the derived species \cr
+will be vanishing small and can be ignored. \cr
 Complex dissociation constants (Log K)  are from SupCrt 92  slop98.dat \url{http://geopig.asu.edu/?q=tools} \cr
-The Debye_Hückel parameters (A, B & Bdot) equations are polynomial fits to data from tables in Helgeson (1969)  Helgeson & Kirkham (1974) by Nellie Olsen (Note Bdot not used at temperatures  greater than 300°C). \cr
-Helgeson H. C. (1969) Thermodynamics of hydrothermal systems at elevated temperatures and pressures. American Journal of Science 267, 729-804. \cr
+The Debye_Hückel parameters (A, B) equations are polynomial fits to data at 0.5 kb from tables in Helgeson & Kirkham (1974).\cr
+Note Bdot is not used.\cr
 Helgeson H. C. and Kirkham D. H. (1974) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures: II. Debye-Hückel parameters for activity coefficients and relative partial molar properties American Journal of Science 274, 1199-1261.
 }
 \examples{
