@@ -30,3 +30,14 @@ library('EqSolvR')
 ## Add H2SO4 and MgCl2 as an additional products (the K values, exK, here are just examples)
 d <- chemsolve(exprod=c("H2SO4","MgCl2"),exconstit=c("H","H","SO4","Mg","Cl","Cl"),exnumz=c(3,3),excharges=c(0,0),exa=c(0,0),exK=c(-6,-3))
 ```
+#### To cite this package
+Stefan Mroczek and Ed Mroczek (2017). EqSolvR: Chemical Equilibrium Solver. R package version 1.2.0.
+
+```latex
+  @Manual{,
+    title = {EqSolvR: Chemical Equilibrium Solver},
+    author = {Stefan Mroczek and Ed Mroczek},
+    year = {2017},
+    note = {R package version 1.2.0},
+  }
+```
