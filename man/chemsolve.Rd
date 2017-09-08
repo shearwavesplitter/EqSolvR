@@ -52,8 +52,8 @@ Mass balance and charge balance solver for chemical equilibria at 0.5 kb. This i
 A wrapper for the chemsolve_generic function that allow easy addition of product species.
 Use the generic function (chemsolve_generic) if new basis species need to be added or if the log K/temperature range is extended (up or down). \cr
 Normally total moles anions = total moles cations. \cr
-The charge balance (without any speciation) is adjusted to zero \cr
-by balancing against Cl as otherwise the calculation is too sensitive to H+. \cr
+The charge balance (without any speciation) is adjusted to zero 
+by balancing against Cl (default) as otherwise the calculation is too sensitive to H+. The balancing species can be easily changed to any of the other basis species (or none). \cr
 Choose reasonable starting values; for H+, OH- and equilibrium concentrations of the basis species. \cr
 If negative concentrations are calculated,  choose better initial starting values. \cr
 To exclude a  basis value set the basis concentration to zero and the concentrations of this and the derived species \cr
