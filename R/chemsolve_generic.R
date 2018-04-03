@@ -7,7 +7,7 @@
 #' @param A A value (Defaults to value for 300 degrees C and 0.5kb)
 #' @param B B value (Defaults to value for 300 degrees C and 0.5kb)
 #' @param Bdot Bdot value is zero by default
-#' @param start Initial guess for the calculated equilibrium concentration of the basis species
+#' @param start Initial guess for the calculated equilibrium concentration of the basis species (in the same order as the solvent and then the species vectors)
 #' @param maxitr Maximum number of iterations
 #' @param solvent Symbols for solvent species (should not be changed for water)
 #' @param solvcharge Charges for solvent species (should not be changed for water)
