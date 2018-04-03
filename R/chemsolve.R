@@ -7,7 +7,7 @@
 #' @param SO4t Sulphate (mol/kg); total
 #' @param Cat Calcium (mol/kg); total
 #' @param Mgt Magnesium (mol/kg); total
-#' @param start Initial guess for the calculated equilbrium concentrations of the basis species
+#' @param start Initial guess for the calculated equilbrium concentrations of the basis species (in the order of H+, OH-, Na+, K+, Cl-, SO42+, Ca2+, Mg2+).
 #' @param maxitr Maximum number of iterations
 #' @param exprod A vector of the names of the additional complex(es)
 #' @param exconstit  A vector of the chemical symbol names of the the basis species that are constitute each of the the additional complexes
