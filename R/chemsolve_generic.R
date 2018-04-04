@@ -27,7 +27,10 @@
 #' a=c(4,3,3.5),charges=c(1,1,-1),prod,start=c(0.00001,0.00001,0.15,0.15,0.15),prod=products)
 chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c("9","4"),Ksoln=-10.908,species=c("Na","K","Cl","SO4","Ca","Mg"), conc=c(0.2,0.2,0.4,0.2,0.1,0.1),a=c(4,3,3.5,4,6,8),charges=c(1,1,-1,-2,2,2),prod,A=1.0529,B=0.3850,Bdot=0,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,bal=NULL){
 
-
+    lsolv <- length(solvent)
+    lstart <- length(start)
+    lspecies <- length(species)
+    if(lstart != (lsolv+lspecies)){stop('start vector must be equal to length of solvent plus species')}
 
 	## Adjust one thing so that initial concentrations charge balance to zero
 	if(!is.null(bal)){
@@ -177,12 +180,13 @@ chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c
 		it <- it +1 #iterations 
 		if(it > maxitr){stop("Max iterations reached")}
 		if(exists('ss')){
-			
-			x[1:(rl+2)] <- ss$root
+
+
+			x[1:length(ss$root)] <- ss$root
 
 			cs <- x+1
-			
-			cr <- cs/(xs+1)
+
+			cr <- cs[1:length(xs)]/(xs+1)
 			cr <- sum(cr)
 		}
 
@@ -211,7 +215,7 @@ chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c
 	}
 
 	f <- c(ss$root,x[(rl+3):tl])
-	names <- full$species
+	names <- paste0(full$species,"(",full$charge,")")
 	f <- t(f)
 	f <- as.data.frame(f)
 	colnames(f) <- names
