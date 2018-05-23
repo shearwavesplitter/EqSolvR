@@ -27,8 +27,8 @@ library('EqSolvR')
 library('EqSolvR')
 ## Run the solver with the default species of Na, Cl, K, SO4, Ca, and Mg 
 ## Defaults to a charge balance against Cl (bal="Cl")
-## Add H2SO4 and MgCl2 as an additional products (the K values, exK, here are just examples)
-d <- chemsolve(exprod=c("H2SO4","MgCl2"),exconstit=c("H","H","SO4","Mg","Cl","Cl"),exnumz=c(3,3),excharges=c(0,0),exa=c(0,0),exK=c(-6,-3))
+d <- chemsolve(Tc = 400, Nat = 0.4, Kt = 0.2, Clt = 0.6, SO4t = 0.2,Cat = 0.1, Mgt = 0.1, start = c(1e-06, 1e-05, 0.3, 0.1, 0.3,0.01, 0.001, 0.02), maxitr = 100, exprod = NULL, exconstit = NULL,exnumz = NULL, excharges = NULL, exa = NULL, exK = NULL, bal = "Cl")
+
 ```
 #### To cite this package
 Stefan Mroczek and Ed Mroczek (2017). EqSolvR: Chemical Equilibrium Solver. R package version 1.2.0.
