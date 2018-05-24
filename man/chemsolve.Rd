@@ -69,7 +69,7 @@ Additional complexes based on the existing basis species can easily be added (se
 ## Add KHSO4° as an additional complex given the existing list of basis species and calculate the equilibrium concentrations and pH at 400°C.  
 chemsolve(Tc = 400, Nat = 0.4, Kt = 0.2, Clt = 0.6, SO4t = 0.2,Cat = 0.1, Mgt = 0.1, start = c(1e-06, 1e-05, 0.3, 0.1, 0.3,0.01, 0.001, 0.02), maxitr = 100, exprod =  c("KHSO4"), exconstit = c("K", "H", "SO4"),exnumz =  c(3), excharges =  c(0), exa =  c(0),  exK =  c(-8.701), bal = "Cl")
 
-##Determine the equilibria at a range of temperatures. In this version this only works for default complexes  
+##Determine the equilibria at a range of temperatures. In this version this only works for the default complexes.  
 temps <- seq(300,400,10) #A vector of temperatures repeating every 10 degrees from 300 to 400
 r <- lapply(temps,chemsolve,Stef, can you put in what is required given the above example and check all this below works thanks) #Creates a list of the results
 r[[1]] #Display results from first temperature
