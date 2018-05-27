@@ -4,13 +4,11 @@
 \alias{chemsolve_generic}
 \title{Mass balance and charge solver for general cases}
 \usage{
-chemsolve_generic(solvent = c("H", "OH"), solvcharge = c("1", "-1"),
-  solva = c("9", "4"), Ksoln = -10.908, species = c("Na", "K", "Cl",
-  "SO4", "Ca", "Mg"), conc = c(0.2, 0.2, 0.4, 0.2, 0.1, 0.1), a = c(4, 3,
-  3.5, 4, 6, 8), charges = c(1, 1, -1, -2, 2, 2), prod, A = 1.0529,
-  B = 0.385, Bdot = 0, start = c(1e-05, 1e-05, 0.15, 0.15, 0.15,
-  0.104756881, 0.05, 0.05), maxitr = 100, bal = NULL)
-}
+chemsolve_generic(solvent = c("H", "OH"), solvcharge = c("1", "-1"),solva = c("9", "4"), 
+Ksoln = -11.356, species = c("Na", "K", "Cl","SO4", "Ca", "Mg"), 
+conc = c(0.4, 0.2, 0.6, 0.2, 0.1, 0.1), a = c(4, 3,3.5, 4, 6, 8), 
+charges = c(1, 1, -1, -2, 2, 2), A = 1.8789,B = 0.423, 
+Bdot = 0, start = c(1e-06, 1e-05, 0.3, 0.1, 0.3,0.01, 0.001, 0.02), maxitr = 100, bal = "Cl", prod = products)}
 \arguments{
 \item{solvent}{Symbols for solvent species (should not be changed for water)}
 
@@ -18,7 +16,7 @@ chemsolve_generic(solvent = c("H", "OH"), solvcharge = c("1", "-1"),
 
 \item{solva}{Ion size parameters (should not be changed for water)}
 
-\item{Ksoln}{log K of the solvent (Water at 300 degrees C - changes with temperature)}
+\item{Ksoln}{log K of the solvent}
 
 \item{species}{Chemical symbols of the basis species}
 
@@ -28,9 +26,9 @@ chemsolve_generic(solvent = c("H", "OH"), solvcharge = c("1", "-1"),
 
 \item{prod}{Dataframe detailing the derived species (Output from prods function)}
 
-\item{A}{A value (Defaults to value for 300 degrees C and 0.5kb)}
+\item{A}{A value}
 
-\item{B}{B value (Defaults to value for 300 degrees C and 0.5kb)}
+\item{B}{B value}
 
 \item{Bdot}{Bdot value is zero by default}
 
@@ -50,12 +48,20 @@ Mass balance and charge balance solver for chemical equilibria. This is the work
 A generic function to add any basis species, product species or if the log K/temperature range need to be extended. Requires all parameters (e.g. log K at the given temperature).
 }
 \examples{
-## Add H2SO4 as an additional complex given the existing list of basis species
-
-## Define the product species NaCl and KCl
-products <- prods(names=c("NaCl","KCl"),number=c(2,2),
-species=c("Na","Cl","K","Cl"),K=c(-6.68,0.001),a=c(0,0))
-Run chemsolve with Na, K, and Cl basis species at 300 degrees
-Chemsolve_generic(species=c("Na","K","Cl"), conc=c(0.2,0.2,0.4),
-a=c(4,3,3.5),charges=c(1,1,-1),prod,start=c(0.00001,0.00001,0.15),prod=products)
+## Define all the product species inclusing incluing KHSO4° FeSO4° and FeCl+ which are not included as default species in Chemsolve
+## LogK are at 400°C and 0.5kb
+  products <- prods(names=c("NaSO4","HSO4","KSO4","NaCl","KCl","HCl","KOH","NaOH","CaSO4",
+"MgSO4","MgCl","CaCl","CaCl2","MgOH","CaOH","FeCl","FeSO4","KHSO4"),
+number=c(2,2,2,2,2,2,2,2,2,2,2,2,3,2,2,2,2,3),species=c("Na","SO4","H","SO4","K",
+"SO4","Na","Cl","K","Cl","H","Cl","K","OH","Na","OH","Ca","SO4","Mg","SO4","Mg","Cl",
+"Ca","Cl","Ca","Cl","Cl","Mg","OH","Ca","OH","Fe","Cl","Fe","SO4","K","H","SO4"),
+K=c(-3.549,-7.444,-3.899,-1.737,-1.236,-2.689,-1.446,-1.164,-6.173,-6.014,-3.18,
+-3.692,-4.783,-6.149,-5.635,-5.745,-3.814, -8.701),a=c(4,4,4,0,0,0,0,0,0,0,8,6,0,8,6,6,0,0))															
+## A & B are at 400°C and 0.5kb
+Run chemsolve 
+chemsolve_generic(solvent = c("H", "OH"), solvcharge = c("1", "-1"),solva = c("9", "4"), Ksoln = -11.356, 
+species = c("Na", "K", "Cl","SO4", "Ca", "Mg","Fe"), 
+conc = c(0.4, 0.2, 0.8, 0.2, 0.1, 0.1,0.1), a = c(4, 3,3.5, 4, 6, 8,6), 
+charges = c(1, 1, -1, -2, 2, 2,2), A = 1.8789,B = 0.423, Bdot = 0, 
+start = c(1e-06, 1e-05, 0.3, 0.1, 0.3,0.01, 0.001, 0.02,1e-8), maxitr = 100, bal = "Cl", prod = products)
 }
