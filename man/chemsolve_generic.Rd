@@ -4,6 +4,7 @@
 \alias{chemsolve_generic}
 \title{Mass balance and charge solver for general cases}
 \usage{
+products <- prods(names=c("NaSO4","HSO4","KSO4","NaCl","KCl","HCl","KOH","NaOH","CaSO4","MgSO4","MgCl","CaCl","CaCl2","MgOH","CaOH"),number=c(2,2,2,2,2,2,2,2,2,2,2,2,3,2,2),species=c("Na","SO4","H","SO4","K","SO4","Na","Cl","K","Cl","H","Cl","K","OH","Na","OH","Ca","SO4","Mg","SO4","Mg","Cl","Ca","Cl","Ca","Cl","Cl","Mg","OH","Ca","OH"),K=c(-3.549,-7.444,-3.899,-1.737,-1.236,-2.689,-1.446,-1.164,-6.173,-6.014,-3.18,-3.692,-4.783,-6.149,-5.635),a=c(4,4,4,0,0,0,0,0,0,0,8,6,0,8,6))
 chemsolve_generic(solvent = c("H", "OH"), solvcharge = c("1", "-1"),solva = c("9", "4"), 
 Ksoln = -11.356, species = c("Na", "K", "Cl","SO4", "Ca", "Mg"), 
 conc = c(0.4, 0.2, 0.6, 0.2, 0.1, 0.1), a = c(4, 3,3.5, 4, 6, 8), 
