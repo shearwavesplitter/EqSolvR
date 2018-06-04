@@ -63,7 +63,7 @@ The Debye_Hückel parameters (A, B) equations are polynomial fits to data at 0.5
 Note Bdot is not used.\cr
 Helgeson H. C. and Kirkham D. H. (1974) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures: II. Debye-Hückel parameters for activity coefficients and relative partial molar properties American Journal of Science 274, 1199-1261. \cr
 The basis species are:  Na+, K+, Mg2+, Ca2+, Cl-, SO42-. The default complexes are:  NaCl°, KCl°, HCl°, KOH°, NaOH°, KSO4-, NaSO4-,HSO4-,CaSO4°,MgSO4°, MgCl+,CaCl+,CaCl2°,MgOH+,CaOH+. 
-Additional complexes based on the existing basis species can easily be added (see example below)
+Additional complexes based on the existing basis species can easily be added (see example below).  This example is also given for chemsolve_generic function.
 }
 \examples{
 ## Add KHSO4° as an additional complex given the existing list of basis species and calculate the equilibrium concentrations and pH at 400°C.  
