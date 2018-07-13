@@ -4,28 +4,49 @@
 #' @param conc Total concentrations of the basis species (mol/kg)
 #' @param a Ion size parameters for the basis species
 #' @param prod Dataframe detailing the derived species (Output from prods function)
-#' @param A A value (Defaults to value for 300 degrees C and 0.5kb)
-#' @param B B value (Defaults to value for 300 degrees C and 0.5kb)
+#' @param A A value 
+#' @param B B value 
 #' @param Bdot Bdot value is zero by default
 #' @param start Initial guess for the calculated equilibrium concentration of the basis species (in the same order as the solvent and then the species vectors)
 #' @param maxitr Maximum number of iterations
 #' @param solvent Symbols for solvent species (should not be changed for water)
 #' @param solvcharge Charges for solvent species (should not be changed for water)
 #' @param solva Ion size parameters (should not be changed for water)
-#' @param Ksoln log K of the solvent (Water at 300 degrees C - changes with temperature)
-#' @param bal The species to charge balance against (e.g. "Cl") or NULL for none
+#' @param Ksoln log K of the solvent
+#' @param bal The species to charge balance against (e.g. the default of "Cl") or NULL for none
 #' @return A list containing the concentrations, gamma values, and pH at equilibrium
 #' @details A generic function to add any basis species, product species or if the log K/temperature range need to be extended. Requires all parameters (e.g. log K at the given temperature). 
 #' @importFrom rootSolve multiroot
 #' @export
 #' @examples
-#' ## Define the product species NaCl and KCl
-#' products <- prods(names=c("NaCl","KCl"),number=c(2,2),
-#' species=c("Na","Cl","K","Cl"),K=c(-6.68,0.001),a=c(0,0))
-#' ## Run chemsolve with Na, K, and Cl basis species at 300 degrees
-#' chemsolve_generic(species=c("Na","K","Cl"), conc=c(0.2,0.2,0.4),
-#' a=c(4,3,3.5),charges=c(1,1,-1),prod,start=c(0.00001,0.00001,0.15,0.15,0.15),prod=products)
-chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c("9","4"),Ksoln=-10.908,species=c("Na","K","Cl","SO4","Ca","Mg"), conc=c(0.2,0.2,0.4,0.2,0.1,0.1),a=c(4,3,3.5,4,6,8),charges=c(1,1,-1,-2,2,2),prod,A=1.0529,B=0.3850,Bdot=0,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,bal=NULL){
+#' ## Define all the product species including KHSO4° FeSO4° and FeCl+ 
+#' ## which are not included as default species in chemsolve 
+#' ## LogK are at 400°C and 0.5kb. Firsly parameters for the products are defined
+#' prd=c("NaSO4","HSO4","KSO4","NaCl","KCl","HCl","KOH","NaOH","CaSO4",
+#' "MgSO4","MgCl","CaCl","CaCl2","MgOH","CaOH","FeCl","FeSO4","KHSO4")
+#' prdnms=c(2,2,2,2,2,2,2,2,2,2,2,2,3,2,2,2,2,3)
+#' prdconstit=c("Na","SO4","H","SO4","K",
+#' "SO4","Na","Cl","K","Cl","H","Cl","K","OH","Na","OH","Ca","SO4","Mg","SO4","Mg","Cl",
+#' "Ca","Cl","Ca","Cl","Cl","Mg","OH","Ca","OH","Fe","Cl","Fe","SO4","K","H","SO4")
+#' prdK=c(-3.549,-7.444,-3.899,-1.737,-1.236,-2.689,-1.446,-1.164,-6.173,-6.014,-3.18,
+#' -3.692,-4.783,-6.149,-5.635,-5.745,-3.814, -8.701)
+#' prda=c(4,4,4,0,0,0,0,0,0,0,8,6,0,8,6,6,0,0)
+#' ## product input is created with the prods function
+#' products <- prods(names=prd,number=prdnms,species=prdconstit,K=prdK,a=prda)	
+#' 														
+#' ## Starting species are defined for chemsolve
+#' chspec=c("Na", "K", "Cl","SO4", "Ca", "Mg","Fe")
+#' chconc=c(0.4, 0.2, 0.8, 0.2, 0.1, 0.1,0.1)
+#' cha=c(4, 3,3.5, 4, 6, 8,6)
+#' chc=c(1, 1, -1, -2, 2, 2,2)
+#' 
+#' ## chemsolve is now run with the previously defined products
+#' ## Defaults include water as the solvent and a charge balance against Cl
+#' ## A & B are at 400°C and 0.5kb
+#' chemsolve_generic(species = chspec, conc = chconc, a = cha, charges = chc, A = 1.8789,B = 0.423, Bdot = 0, 
+#' start = c(1e-06, 1e-05, 0.3, 0.1, 0.3,0.01, 0.001, 0.02,1e-8),  prod = products)
+
+chemsolve_generic <- function(solvent=c("H","OH"),solvcharge=c("1","-1"),solva=c("9","4"),Ksoln=-11.356,species, conc,a,charges,prod,A,B,Bdot=0,start,maxitr=100,bal="Cl"){
 
     lsolv <- length(solvent)
     lstart <- length(start)

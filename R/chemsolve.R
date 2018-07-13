@@ -20,26 +20,28 @@
 #' Use the generic function (chemsolve_generic) if new basis species need to be added or if the log K/temperature range is extended (up or down). \cr
 #' Normally total moles anions = total moles cations. \cr
 #' The charge balance (without any speciation) is adjusted to zero 
-#' by balancing against Cl (default) as otherwise the calculation is too sensitive to H+. The balancing species can be easily changed to any of the other basis species (or none). \cr
+#' by balancing against Cl- (default) as otherwise the calculation is too sensitive to H+. The balancing species can be easily changed to any of the other basis species (or none). \cr
 #' Choose reasonable starting values; for H+, OH- and equilibrium concentrations of the basis species. \cr
 #' If negative concentrations are calculated,  choose better initial starting values. \cr
-#' To exclude a  basis value set the basis concentration to zero and the concentrations of this and the derived species \cr
-#' will be vanishing small and can be ignored. \cr
-#' Complex dissociation constants (Log K)  are from SupCrt 92  slop98.dat \url{http://geopig.asu.edu/?q=tools} \cr
+#' To exclude a  basis value set the basis concentration to zero and the concentrations of this and the derived species 
+#' will be vanishing small and can be ignored. In the generic version of the program the basis species are simply left out. \cr
+#' Complex dissociation constants (log K)  are from SupCrt 92  slop98.dat \url{http://geopig.asu.edu/?q=tools} \cr
 #' The Debye_Hückel parameters (A, B) equations are polynomial fits to data at 0.5 kb from tables in Helgeson & Kirkham (1974).\cr
 #' Note Bdot is not used.\cr
 #' Helgeson H. C. and Kirkham D. H. (1974) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures: II. Debye-Hückel parameters for activity coefficients and relative partial molar properties American Journal of Science 274, 1199-1261. \cr
 #' The basis species are:  Na+, K+, Mg2+, Ca2+, Cl-, SO42-. The default complexes are:  NaCl°, KCl°, HCl°, KOH°, NaOH°, KSO4-, NaSO4-,HSO4-,CaSO4°,MgSO4°, MgCl+,CaCl+,CaCl2°,MgOH+,CaOH+. 
-#' Additional complexes based on the existing basis species can easily be added (see example below)
+#' Additional complexes based on the existing basis species can easily be added (see example below).  This example is also given for chemsolve_generic function.
 #' @return A list containing the concentrations, activity coefficients, and pH at equilibrium
 #' @importFrom rootSolve multiroot
 #' @export
 #' @examples
-#' ## Add H2SO4 as an additional complex given the existing list of basis species
-#' chemsolve(exprod=c("H2SO4","MgCl2"),exconstit=c("H","H","SO4","Mg","Cl","Cl"),
-#' exnumz=c(3,3),excharges=c(0,0),exa=c(0,0),exK=c(-6,-3))
+#' ## Add KHSO4° as an additional complex given the existing list of basis species and 
+#' ## calculate the equilibrium concentrations and pH at 400°C.
+#' chemsolve(exprod =  c("KHSO4"), exconstit = c("K", "H", "SO4"),
+#' exnumz =  c(3), excharges =  c(0), exa =  c(0),  exK =  c(-8.701), bal = "Cl")
 #'
-#' ##Determine the equilibria at a range of temperatures 
+#' ## Determine the equilibria at a range of temperatures. 
+#' ## Additional complexes can be added per the previous example.
 #' temps <- seq(300,400,10) #A vector of temperatures repeating every 10 degrees from 300 to 400
 #' r <- lapply(temps,chemsolve,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1) #Creates a list of the results
 #' r[[1]] #Display results from first temperature

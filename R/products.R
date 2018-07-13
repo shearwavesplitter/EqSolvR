@@ -6,7 +6,7 @@
 #' @param K A vector of log K values for the product species
 #' @param a A vector of ion size parameters for the product species
 #' @export
-prods <- function(names=c("NaCl","KCl"),number=c(2,2),species=c("Na","Cl","K","Cl"),K=c(-6.68,0.001),a=c(0,0)){
+prods <- function(names,number,species,K,a){
 exfull <- list()
 	for (i in 1:length(names)){
 		ex <- list()

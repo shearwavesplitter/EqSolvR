@@ -1,7 +1,7 @@
 Package: EqSolvR
 Title: Chemical Equilibrium Solver
-Version: 1.2.0
-Date: 2017-04-23
+Version: 1.2.5
+Date: 2018-07-13
 Authors@R: c(person("Stefan", "Mroczek", email = "s.mroczek@outlook.com", role = c("aut", "cre")),person("Ed", "Mroczek", role = "aut"))
 Description: Package for solving chemical equilibria for a given set of reactants and products. The motivation for this program was to enable the calculation, between 300°C and 400°C at 0.5 kb, of pH and speciation given a simple mix of salts. This package has been writting in such a manner that an advanced user can easily set their own reactants, products and temperature in the generic version (chemsolve_generic). chemsolve_generic is the workhorse for chemsolve. Equations are solved numerically using the multiroot function from rootSolve package.
 Depends: R (>= 2.12)

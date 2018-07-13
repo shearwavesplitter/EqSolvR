@@ -31,13 +31,13 @@ d <- chemsolve(Tc = 400, Nat = 0.4, Kt = 0.2, Clt = 0.6, SO4t = 0.2,Cat = 0.1, M
 
 ```
 #### To cite this package
-Stefan Mroczek and Ed Mroczek (2017). EqSolvR: Chemical Equilibrium Solver. R package version 1.2.0.
+Stefan Mroczek and Ed Mroczek (2017). EqSolvR: Chemical Equilibrium Solver. R package version 1.2.5.
 
 ```latex
   @Manual{,
     title = {EqSolvR: Chemical Equilibrium Solver},
     author = {Stefan Mroczek and Ed Mroczek},
     year = {2017},
-    note = {R package version 1.2.0},
+    note = {R package version 1.2.5},
   }
 ```

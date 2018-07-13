@@ -4,8 +4,7 @@
 \alias{prods}
 \title{Create prod dataframe}
 \usage{
-prods(names = c("NaCl", "KCl"), number = c(2, 2), species = c("Na", "Cl",
-  "K", "Cl"), K = c(-6.68, 0.001), a = c(0, 0))
+prods(names, number, species, K, a)
 }
 \arguments{
 \item{names}{A vector of names of the species which react to form the basis species}
