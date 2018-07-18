@@ -74,7 +74,7 @@ exnumz =  c(3), excharges =  c(0), exa =  c(0),  exK =  c(-8.701), bal = "Cl")
 ## Determine the equilibria at a range of temperatures. 
 ## Additional complexes can be added per the previous example.
 temps <- seq(300,400,10) #A vector of temperatures repeating every 10 degrees from 300 to 400
-r <- lapply(temps,chemsolve,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1) #Creates a list of the results
+r <- lapply(temps,chemsolve,Nat=0.4,Kt=0.2,Clt=0.6,SO4t=0.2,Cat=0.1,Mgt=0.1) #Creates a list of the results
 r[[1]] #Display results from first temperature
 r[[10]] #Display the results of the 10th temperature
 }
