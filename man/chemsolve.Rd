@@ -4,9 +4,9 @@
 \alias{chemsolve}
 \title{Mass balance and charge solver}
 \usage{
-chemsolve(Tc = 400, Nat = 0.2, Kt = 0.2, Clt = 0.4, SO4t = 0.2,
-  Cat = 0.1, Mgt = 0.1, start = c(1e-05, 1e-05, 0.15, 0.15, 0.15,
-  0.104756881, 0.05, 0.05), maxitr = 100, exprod = NULL, exconstit = NULL,
+chemsolve(Tc = 400, Nat = 0.4, Kt = 0.2, Clt = 0.6, SO4t = 0.2,
+  Cat = 0.1, Mgt = 0.1, start = c(1e-06, 1e-05, 0.3, 0.1, 0.3, 0.01,
+  0.001, 0.02), maxitr = 100, exprod = NULL, exconstit = NULL,
   exnumz = NULL, excharges = NULL, exa = NULL, exK = NULL, bal = "Cl")
 }
 \arguments{

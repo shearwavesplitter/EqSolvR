@@ -46,7 +46,7 @@
 #' r <- lapply(temps,chemsolve,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1) #Creates a list of the results
 #' r[[1]] #Display results from first temperature
 #' r[[10]] #Display the results of the 10th temperature
-chemsolve <- function(Tc=400,Nat=0.2,Kt=0.2,Clt=0.4,SO4t=0.2,Cat=0.1,Mgt=0.1,start=c(0.00001,0.00001,0.15,0.15,0.15,0.104756881,0.05,0.05),maxitr=100,exprod=NULL,exconstit=NULL,exnumz=NULL,excharges=NULL,exa=NULL,exK=NULL,bal="Cl") {
+chemsolve <- function(Tc=400,Nat=0.4,Kt=0.2,Clt=0.6,SO4t=0.2,Cat=0.1,Mgt=0.1,start=c(1e-6,1e-5,0.3,0.1,0.3,0.01,0.001,0.02),maxitr=100,exprod=NULL,exconstit=NULL,exnumz=NULL,excharges=NULL,exa=NULL,exK=NULL,bal="Cl") {
 spec <- c("Na","K","Cl","SO4","Ca","Mg")
 concz <- c(Nat,Kt,Clt,SO4t,Cat,Mgt)
 speccharges <- c(1,1,-1,-2,2,2)
