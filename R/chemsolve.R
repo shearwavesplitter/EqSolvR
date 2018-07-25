@@ -144,6 +144,7 @@ prodz <- prods(names=products,number=numz,species=constit,K=ks,a=as)
 
 res <- chemsolve_generic(species=spec,conc=concz,a=speca,charges=speccharges,prod=prodz,start=start,maxitr=maxitr,bal=bal,A=Aspec,B=Bspec,Ksoln=Kw)
 
+res$Temperature <- Tc
 return(res)
  
 

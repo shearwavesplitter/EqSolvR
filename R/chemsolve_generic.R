@@ -35,7 +35,7 @@
 #' products <- prods(names=prd,number=prdnms,species=prdconstit,K=prdK,a=prda)	
 #' 														
 #' ## Starting species are defined for chemsolve
-#' chspec=c("Na", "K", "Cl","SO4", "Ca", "Mg","Fe")
+#' chspec=c("Na", "K", "Cl", "SO4", "Ca", "Mg", "Fe")
 #' chconc=c(0.4, 0.2, 0.8, 0.2, 0.1, 0.1,0.1)
 #' cha=c(4, 3,3.5, 4, 6, 8,6)
 #' chc=c(1, 1, -1, -2, 2, 2,2)
