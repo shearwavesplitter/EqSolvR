@@ -65,3 +65,16 @@ The Debye_Hückel parameters (A, B) equations are polynomial fits to data at 0.5
 Note Bdot is not used.\cr
 Helgeson H. C. and Kirkham D. H. (1974) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures: II. Debye-Hückel parameters for activity coefficients and relative partial molar properties American Journal of Science 274, 1199-1261. \cr
 }
+\examples{
+## Add KHSO4° as an additional complex given the existing list of basis species and 
+## calculate the equilibrium concentrations and pH at 400°C.
+chemsolve(exprod =  c("KHSO4"), exconstit = c("K", "H", "SO4"),
+exnumz =  c(3), excharges =  c(0), exa =  c(0),  exK =  c(-8.701), bal = "Cl")
+## Determine the equilibria at a range of temperatures. 
+## Additional complexes can be added per the previous example.
+temps <- seq(300,400,10) #A vector of temperatures repeating every 10 degrees from 300 to 400
+## Na concentration is changed slightly from the default. Further parameters can be added.
+r <- lapply(temps,chemsolve,Nat=0.45) #Creates a list of the results
+r[[1]] #Display results from first temperature
+r[[10]] #Display the results of the 10th temperature
+}
