@@ -22,7 +22,7 @@
 #' by balancing against Cl- (default) as otherwise the calculation can be too sensitive to H+. The balancing species can be easily changed to any of the other basis species (or none). \cr
 #' Choose reasonable starting values; for H+, OH- and equilibrium concentrations of the basis species. \cr
 #' If negative concentrations are calculated,  choose better initial starting values. \cr
-#' If bal = NULL and a large excess of choride (or sulphate) is present this will simimulate the addition of acid HCl. In this case use a a lower starting value of H+.\cr
+#' If bal = NULL and a large excess of chloride (or sulphate) is present this will simulate the addition of acid HCl. In this case use a  lower starting value of H+.\cr
 #' To exclude a  basis value set the basis concentration to zero and the concentrations of this and the derived species 
 #' will be vanishing small and can be ignored. In the generic version of the program the basis species are simply left out. \cr
 #' The basis species are:  Na+, K+, Mg2+, Ca2+, Cl-, SO42-. The default complexes are:  NaCl°, KCl°, HCl°, KOH°, NaOH°, KSO4-, NaSO4-,HSO4-,CaSO4°,MgSO4°, MgCl+,CaCl+,CaCl2°,MgOH+,CaOH+. 
