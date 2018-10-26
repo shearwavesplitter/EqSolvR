@@ -16,6 +16,7 @@
 #' @param bal The species to charge balance against (e.g. the default of "Cl") or NULL for none
 #' @return A list containing the concentrations, gamma values, and pH at equilibrium
 #' @details A generic function to add any basis species, product species or if the log K/temperature range need to be extended. Requires all parameters (e.g. log K at the given temperature). The temperature is indirectly set through the log K, A, B & Bdot values. These parameters need to be reinitialised each time, together with reactants and products, if a calculation across a range of temperatures is required.  A useful upgrade would be to carry over defaults and use a lookup table and interpolation to initialise the parameters across a range of temperatures. This is similar to the wrapper function except that there the defaults are built in and cannot be changed by the casual user. 
+#' For more details see chemsolve documentation.
 #' @importFrom rootSolve multiroot
 #' @export
 #' @examples
