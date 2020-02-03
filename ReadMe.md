@@ -1,7 +1,7 @@
 ### EqSolvR
  Package for solving chemical equilibria for a given set of reactants and products. The motivation for this program was to enable the calculation, between 300°C and 400°C at 0.5 kb, of pH and speciation given a simple mix of salts. This package has been written in such a manner that an advanced user can easily set their own reactants, products and log K at any temperature in the generic version (chemsolve_generic). chemsolve_generic is the workhorse for chemsolve. Equations are solved numerically using the multiroot function from rootSolve package.
  
-The **[eq_creator.xlsx](https://github.com/shearwavesplitter/EqSolvR/blob/master/eq_creator.xlsx)** excel spreadsheet, created by Lucjan Sajkowski, can be used easily format the R inputs.
+The **[eq_creator.xlsx](https://github.com/shearwavesplitter/EqSolvR/blob/master/eq_creator.xlsx)** excel spreadsheet, created by Lucjan Sajkowski, can be used to easily format the complicated R inputs for the generic version.
 
 #### [Manual](https://github.com/shearwavesplitter/EqSolvR/blob/master/EqSolvR.pdf)
 
